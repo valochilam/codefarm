@@ -54,7 +54,7 @@ const Index = () => {
             
             <div className="grid md:grid-cols-3 gap-8">
               {/* Mortal Realm */}
-              <div className="border-4 border-border bg-card p-8 shadow-md hover:shadow-lg transition-all">
+              <div className="border-4 border-muted-foreground bg-card p-8 shadow-md hover:shadow-lg transition-all">
                 <div className="font-mono text-xs tracking-[0.3em] text-muted-foreground mb-2">
                   REALM I
                 </div>
@@ -65,68 +65,68 @@ const Index = () => {
                 </p>
                 <div className="space-y-2 font-mono text-sm">
                   <div className="flex justify-between border-b border-border/30 pb-1">
-                    <span>Stage 1</span><span className="text-muted-foreground">Awakening</span>
+                    <span>0-49</span><span className="text-muted-foreground">Qi Condensation</span>
                   </div>
                   <div className="flex justify-between border-b border-border/30 pb-1">
-                    <span>Stage 2</span><span className="text-muted-foreground">Foundation</span>
+                    <span>50-124</span><span className="text-muted-foreground">Foundation Establishment</span>
                   </div>
                   <div className="flex justify-between border-b border-border/30 pb-1">
-                    <span>Stage 3</span><span className="text-muted-foreground">Consolidation</span>
+                    <span>125-249</span><span className="text-muted-foreground">Core Formation</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Stage 4</span><span className="text-muted-foreground">Transcendence</span>
+                    <span>250-399</span><span className="text-muted-foreground">Nascent Soul</span>
                   </div>
                 </div>
               </div>
 
               {/* Immortal Realm */}
-              <div className="border-4 border-accent bg-card p-8 shadow-lg">
-                <div className="font-mono text-xs tracking-[0.3em] text-accent mb-2">
+              <div className="border-4 border-violet-500 bg-card p-8 shadow-lg">
+                <div className="font-mono text-xs tracking-[0.3em] text-violet-500 mb-2">
                   REALM II
                 </div>
-                <h3 className="font-mono text-2xl font-bold uppercase mb-4 text-accent">Immortal</h3>
-                <div className="h-1 w-16 bg-accent mb-6"></div>
+                <h3 className="font-mono text-2xl font-bold uppercase mb-4 text-violet-500">Immortal</h3>
+                <div className="h-1 w-16 bg-violet-500 mb-6"></div>
                 <p className="font-mono text-sm text-muted-foreground mb-6">
                   400 — 1,599 AURA
                 </p>
                 <div className="space-y-2 font-mono text-sm">
                   <div className="flex justify-between border-b border-border/30 pb-1">
-                    <span>Stage 1</span><span className="text-muted-foreground">Qi Condensation</span>
+                    <span>400-599</span><span className="text-muted-foreground">Soul Transformation</span>
                   </div>
                   <div className="flex justify-between border-b border-border/30 pb-1">
-                    <span>Stage 2</span><span className="text-muted-foreground">Core Formation</span>
+                    <span>600-849</span><span className="text-muted-foreground">Void Refinement</span>
                   </div>
                   <div className="flex justify-between border-b border-border/30 pb-1">
-                    <span>Stage 3</span><span className="text-muted-foreground">Nascent Soul</span>
+                    <span>850-1199</span><span className="text-muted-foreground">Dao Integration</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Stage 4</span><span className="text-muted-foreground">Spirit Severing</span>
+                    <span>1200-1599</span><span className="text-muted-foreground">Immortal Ascension</span>
                   </div>
                 </div>
               </div>
 
               {/* Divine Realm */}
-              <div className="border-4 border-border bg-card p-8 shadow-md hover:shadow-lg transition-all">
-                <div className="font-mono text-xs tracking-[0.3em] text-muted-foreground mb-2">
+              <div className="border-4 border-accent bg-card p-8 shadow-md hover:shadow-lg transition-all">
+                <div className="font-mono text-xs tracking-[0.3em] text-accent mb-2">
                   REALM III
                 </div>
-                <h3 className="font-mono text-2xl font-bold uppercase mb-4">Divine</h3>
-                <div className="h-1 w-16 bg-foreground mb-6"></div>
+                <h3 className="font-mono text-2xl font-bold uppercase mb-4 text-accent">Divine</h3>
+                <div className="h-1 w-16 bg-accent mb-6"></div>
                 <p className="font-mono text-sm text-muted-foreground mb-6">
                   1,600+ AURA
                 </p>
                 <div className="space-y-2 font-mono text-sm">
                   <div className="flex justify-between border-b border-border/30 pb-1">
-                    <span>Stage 1</span><span className="text-muted-foreground">Dao Seeking</span>
+                    <span>1600-1999</span><span className="text-muted-foreground">True Immortal</span>
                   </div>
                   <div className="flex justify-between border-b border-border/30 pb-1">
-                    <span>Stage 2</span><span className="text-muted-foreground">Dao Comprehension</span>
+                    <span>2000-2399</span><span className="text-muted-foreground">Golden Immortal</span>
                   </div>
                   <div className="flex justify-between border-b border-border/30 pb-1">
-                    <span>Stage 3</span><span className="text-muted-foreground">Dao Manifestation</span>
+                    <span>2400-2799</span><span className="text-muted-foreground">Immortal King</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Stage 4</span><span className="text-muted-foreground">Dao Perfection</span>
+                    <span>2800+</span><span className="text-muted-foreground">Immortal Sovereign</span>
                   </div>
                 </div>
               </div>
