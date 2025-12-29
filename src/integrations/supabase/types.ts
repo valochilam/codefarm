@@ -14,6 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      problem_categories: {
+        Row: {
+          category_id: string
+          id: string
+          problem_id: string
+        }
+        Insert: {
+          category_id: string
+          id?: string
+          problem_id: string
+        }
+        Update: {
+          category_id?: string
+          id?: string
+          problem_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "problem_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "problem_categories_problem_id_fkey"
+            columns: ["problem_id"]
+            isOneToOne: false
+            referencedRelation: "problems"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      problems: {
+        Row: {
+          aura_reward: number
+          constraints: string | null
+          created_at: string
+          description: string
+          difficulty: string
+          id: string
+          input_format: string | null
+          memory_limit_mb: number
+          output_format: string | null
+          sample_input: string | null
+          sample_output: string | null
+          slug: string
+          solved_count: number
+          submission_count: number
+          time_limit_ms: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          aura_reward?: number
+          constraints?: string | null
+          created_at?: string
+          description: string
+          difficulty: string
+          id?: string
+          input_format?: string | null
+          memory_limit_mb?: number
+          output_format?: string | null
+          sample_input?: string | null
+          sample_output?: string | null
+          slug: string
+          solved_count?: number
+          submission_count?: number
+          time_limit_ms?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          aura_reward?: number
+          constraints?: string | null
+          created_at?: string
+          description?: string
+          difficulty?: string
+          id?: string
+          input_format?: string | null
+          memory_limit_mb?: number
+          output_format?: string | null
+          sample_input?: string | null
+          sample_output?: string | null
+          slug?: string
+          solved_count?: number
+          submission_count?: number
+          time_limit_ms?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           aura: number
@@ -47,6 +161,85 @@ export type Database = {
         }
         Relationships: []
       }
+      solved_problems: {
+        Row: {
+          first_solved_at: string
+          id: string
+          problem_id: string
+          user_id: string
+        }
+        Insert: {
+          first_solved_at?: string
+          id?: string
+          problem_id: string
+          user_id: string
+        }
+        Update: {
+          first_solved_at?: string
+          id?: string
+          problem_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "solved_problems_problem_id_fkey"
+            columns: ["problem_id"]
+            isOneToOne: false
+            referencedRelation: "problems"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      submissions: {
+        Row: {
+          code: string
+          created_at: string
+          error_message: string | null
+          id: string
+          language: string
+          memory_kb: number | null
+          problem_id: string
+          runtime_ms: number | null
+          status: string
+          test_results: Json | null
+          user_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          language: string
+          memory_kb?: number | null
+          problem_id: string
+          runtime_ms?: number | null
+          status?: string
+          test_results?: Json | null
+          user_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          language?: string
+          memory_kb?: number | null
+          problem_id?: string
+          runtime_ms?: number | null
+          status?: string
+          test_results?: Json | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submissions_problem_id_fkey"
+            columns: ["problem_id"]
+            isOneToOne: false
+            referencedRelation: "problems"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -70,6 +263,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      count_problems: {
+        Args: { p_difficulty?: string; p_search?: string }
+        Returns: number
+      }
       get_leaderboard: {
         Args: { limit_count?: number; offset_count?: number }
         Returns: {
@@ -79,6 +276,23 @@ export type Database = {
           rank: number
           total_submissions: number
           username: string
+        }[]
+      }
+      get_problems: {
+        Args: {
+          p_difficulty?: string
+          p_limit?: number
+          p_offset?: number
+          p_search?: string
+        }
+        Returns: {
+          aura_reward: number
+          difficulty: string
+          id: string
+          slug: string
+          solved_count: number
+          submission_count: number
+          title: string
         }[]
       }
       get_public_profile: {

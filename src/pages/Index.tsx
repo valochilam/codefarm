@@ -1,41 +1,16 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { NavBar } from "@/components/NavBar";
 import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
-  const { profile, isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="min-h-screen bg-background text-foreground dark">
       <div className="dark bg-background text-foreground">
-        {/* Navigation */}
-        <nav className="border-b-4 border-border bg-card">
-          <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 className="font-mono text-2xl font-bold tracking-wider uppercase">
-              CODE_FARM
-            </h1>
-            <div className="flex gap-4 items-center font-mono text-sm uppercase tracking-wider">
-              <Link to="/problems" className="hover:text-accent transition-colors">Challenges</Link>
-              {isAuthenticated && (
-                <Link to="/playground" className="hover:text-accent transition-colors">Playground</Link>
-              )}
-              <Link to="/leaderboard" className="hover:text-accent transition-colors">Leaderboard</Link>
-              {isAuthenticated ? (
-                <>
-                  <span className="text-accent">{profile?.username}</span>
-                  <span className="text-muted-foreground">|</span>
-                  <span className="text-primary">{profile?.aura || 0} AURA</span>
-                  <button onClick={logout} className="hover:text-destructive transition-colors">
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <Link to="/auth" className="hover:text-accent transition-colors">Login</Link>
-              )}
-            </div>
-          </div>
-        </nav>
+        <NavBar />
 
         {/* Hero Section */}
         <section className="border-b-4 border-border py-24 px-6">

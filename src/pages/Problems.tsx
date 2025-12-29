@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { api, Problem as ProblemType } from '@/lib/api';
+import { getProblems, Problem } from '@/lib/supabase-api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { NavBar } from '@/components/NavBar';
 
 const difficultyColors: Record<string, string> = {
   easy: 'text-jade border-jade',
@@ -13,7 +14,7 @@ const difficultyColors: Record<string, string> = {
 };
 
 export default function Problems() {
-  const [problems, setProblems] = useState<ProblemType[]>([]);
+  const [problems, setProblems] = useState<Problem[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -23,12 +24,12 @@ export default function Problems() {
 
   useEffect(() => {
     loadProblems();
-  }, [page, difficulty, search]);
+  }, [page, difficulty]);
 
   const loadProblems = async () => {
     setLoading(true);
     try {
-      const result = await api.getProblems({
+      const result = await getProblems({
         limit,
         offset: page * limit,
         difficulty: difficulty || undefined,
@@ -52,18 +53,7 @@ export default function Problems() {
   return (
     <div className="min-h-screen bg-background text-foreground dark">
       <div className="dark bg-background text-foreground">
-        {/* Navigation */}
-        <nav className="border-b-4 border-border bg-card">
-          <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-            <Link to="/" className="font-mono text-2xl font-bold tracking-wider uppercase">
-              CODE_FARM
-            </Link>
-            <div className="flex gap-4 font-mono text-sm uppercase tracking-wider">
-              <Link to="/problems" className="text-accent">Challenges</Link>
-              <Link to="/leaderboard" className="hover:text-accent transition-colors">Leaderboard</Link>
-            </div>
-          </div>
-        </nav>
+        <NavBar />
 
         <main className="container mx-auto px-6 py-12">
           <h1 className="font-mono text-4xl font-bold uppercase tracking-wider mb-8">
@@ -110,7 +100,7 @@ export default function Problems() {
               </div>
             ) : problems.length === 0 ? (
               <div className="p-8 text-center font-mono text-muted-foreground">
-                No problems found. The server may not be running.
+                No problems found.
               </div>
             ) : (
               problems.map((problem, index) => (
@@ -129,10 +119,10 @@ export default function Problems() {
                     {problem.difficulty}
                   </div>
                   <div className="col-span-2 font-mono text-accent">
-                    +{problem.auraReward}
+                    +{problem.aura_reward}
                   </div>
                   <div className="col-span-2 font-mono text-muted-foreground">
-                    {problem.solvedCount}
+                    {problem.solved_count}
                   </div>
                 </Link>
               ))

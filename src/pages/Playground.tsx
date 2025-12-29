@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { CodeEditor } from '@/components/CodeEditor';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { Play, Trash2 } from 'lucide-react';
+import { NavBar } from '@/components/NavBar';
+import { runCode } from '@/lib/supabase-api';
 
 const defaultCode: Record<string, string> = {
   c: `#include <stdio.h>
@@ -88,31 +90,31 @@ export default function Playground() {
     setIsRunning(true);
     setOutput('');
 
-    // Simulate compilation/execution
-    // In production, this would call your judge API
     toast({
       title: 'Running code...',
       description: 'Your code is being executed.',
     });
 
-    setTimeout(() => {
-      // Simulate output based on language
-      let simulatedOutput = '';
-      
-      if (code.includes('print') || code.includes('cout') || code.includes('printf') || code.includes('console.log') || code.includes('System.out')) {
-        simulatedOutput = 'Hello, Cultivator!\n\n[Execution completed successfully]\nTime: 0.02s | Memory: 2.1 MB';
-      } else {
-        simulatedOutput = '[Program executed with no output]\nTime: 0.01s | Memory: 1.8 MB';
-      }
-
-      setOutput(simulatedOutput);
-      setIsRunning(false);
+    try {
+      const result = await runCode(code, language, input);
+      setOutput(result.output);
       
       toast({
         title: 'Execution Complete',
         description: 'Check the output panel for results.',
       });
-    }, 1500);
+    } catch (error) {
+      console.error('Error running code:', error);
+      setOutput('[Error]\nFailed to execute code. Please try again.');
+      
+      toast({
+        title: 'Execution Failed',
+        description: 'There was an error running your code.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsRunning(false);
+    }
   };
 
   const handleClear = () => {
@@ -137,20 +139,7 @@ export default function Playground() {
   return (
     <div className="min-h-screen bg-background text-foreground dark">
       <div className="dark bg-background text-foreground">
-        {/* Navigation */}
-        <nav className="border-b-4 border-border bg-card">
-          <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-            <Link to="/" className="font-mono text-2xl font-bold tracking-wider uppercase">
-              CODE_FARM
-            </Link>
-            <div className="flex gap-4 items-center font-mono text-sm uppercase tracking-wider">
-              <Link to="/problems" className="hover:text-accent transition-colors">Challenges</Link>
-              <Link to="/playground" className="text-accent">Playground</Link>
-              <Link to="/leaderboard" className="hover:text-accent transition-colors">Leaderboard</Link>
-              <span className="text-primary">{profile?.aura || 0} AURA</span>
-            </div>
-          </div>
-        </nav>
+        <NavBar />
 
         <main className="container mx-auto px-6 py-6">
           {/* Header */}
@@ -160,7 +149,7 @@ export default function Playground() {
                 Code Playground
               </h1>
               <p className="font-mono text-muted-foreground text-sm mt-1">
-                Practice coding with snippets • Press Ctrl+Enter to run
+                Practice coding with snippets • Press Ctrl+Enter or F9 to run
               </p>
             </div>
             <div className="flex gap-4 items-center">

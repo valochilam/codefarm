@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { api, LeaderboardUser } from '@/lib/api';
+import { getLeaderboard, LeaderboardUser } from '@/lib/supabase-api';
 import { Button } from '@/components/ui/button';
+import { NavBar } from '@/components/NavBar';
 
 const realmColors: Record<string, { border: string; text: string; bg: string }> = {
   mortal: { border: 'border-muted-foreground', text: 'text-muted-foreground', bg: 'bg-muted-foreground/10' },
@@ -38,7 +38,7 @@ export default function Leaderboard() {
   const loadLeaderboard = async () => {
     setLoading(true);
     try {
-      const result = await api.getLeaderboard(limit, page * limit);
+      const result = await getLeaderboard(limit, page * limit);
       setUsers(result.users);
       setTotal(result.total);
     } catch (error) {
@@ -51,18 +51,7 @@ export default function Leaderboard() {
   return (
     <div className="min-h-screen bg-background text-foreground dark">
       <div className="dark bg-background text-foreground">
-        {/* Navigation */}
-        <nav className="border-b-4 border-border bg-card">
-          <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-            <Link to="/" className="font-mono text-2xl font-bold tracking-wider uppercase">
-              CODE_FARM
-            </Link>
-            <div className="flex gap-4 font-mono text-sm uppercase tracking-wider">
-              <Link to="/problems" className="hover:text-accent transition-colors">Challenges</Link>
-              <Link to="/leaderboard" className="text-accent">Leaderboard</Link>
-            </div>
-          </div>
-        </nav>
+        <NavBar />
 
         <main className="container mx-auto px-6 py-12">
           <h1 className="font-mono text-4xl font-bold uppercase tracking-wider mb-4">
@@ -88,7 +77,7 @@ export default function Leaderboard() {
               </div>
             ) : users.length === 0 ? (
               <div className="p-8 text-center font-mono text-muted-foreground">
-                No cultivators found. The server may not be running.
+                No cultivators found. Be the first to join!
               </div>
             ) : (
               users.map((user) => {
@@ -119,7 +108,7 @@ export default function Leaderboard() {
                       {user.aura.toLocaleString()}
                     </div>
                     <div className="col-span-2 font-mono text-muted-foreground">
-                      {user.problemsSolved} solved
+                      {user.problems_solved} solved
                     </div>
                   </div>
                 );
