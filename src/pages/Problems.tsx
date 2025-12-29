@@ -80,12 +80,12 @@ export default function Problems() {
                 className="font-mono border-4 border-border"
               />
             </form>
-            <Select value={difficulty} onValueChange={(v) => { setDifficulty(v); setPage(0); }}>
+            <Select value={difficulty || 'all'} onValueChange={(v) => { setDifficulty(v === 'all' ? '' : v); setPage(0); }}>
               <SelectTrigger className="w-[180px] font-mono border-4 border-border">
                 <SelectValue placeholder="All Difficulties" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Difficulties</SelectItem>
+                <SelectItem value="all">All Difficulties</SelectItem>
                 <SelectItem value="easy">Easy</SelectItem>
                 <SelectItem value="medium">Medium</SelectItem>
                 <SelectItem value="hard">Hard</SelectItem>
