@@ -96,9 +96,12 @@ export function CodeEditor({ value, onChange, language, height = '500px', onRun 
     editorRef.current = editor;
     editor.focus();
 
-    // Add keyboard shortcut for running code
+    // Add keyboard shortcuts for running code (Ctrl+Enter and F9)
     if (onRun) {
       editor.addCommand(monacoInstance.KeyMod.CtrlCmd | monacoInstance.KeyCode.Enter, () => {
+        onRun();
+      });
+      editor.addCommand(monacoInstance.KeyCode.F9, () => {
         onRun();
       });
     }
