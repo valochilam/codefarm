@@ -1,7 +1,11 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
+  const { user, isAuthenticated, logout } = useAuth();
+
   return (
     <div className="min-h-screen bg-background text-foreground dark">
       <div className="dark bg-background text-foreground">
@@ -11,10 +15,21 @@ const Index = () => {
             <h1 className="font-mono text-2xl font-bold tracking-wider uppercase">
               CODE_FARM
             </h1>
-            <div className="flex gap-4 font-mono text-sm uppercase tracking-wider">
-              <a href="#" className="hover:text-accent transition-colors">Realms</a>
-              <a href="#" className="hover:text-accent transition-colors">Challenges</a>
-              <a href="#" className="hover:text-accent transition-colors">Leaderboard</a>
+            <div className="flex gap-4 items-center font-mono text-sm uppercase tracking-wider">
+              <Link to="/problems" className="hover:text-accent transition-colors">Challenges</Link>
+              <Link to="/leaderboard" className="hover:text-accent transition-colors">Leaderboard</Link>
+              {isAuthenticated ? (
+                <>
+                  <span className="text-accent">{user?.username}</span>
+                  <span className="text-muted-foreground">|</span>
+                  <span className="text-primary">{user?.aura} AURA</span>
+                  <button onClick={logout} className="hover:text-destructive transition-colors">
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link to="/auth" className="hover:text-accent transition-colors">Login</Link>
+              )}
             </div>
           </div>
         </nav>
@@ -32,12 +47,16 @@ const Index = () => {
               Cultivate Your Code. Ascend Through Realms. Become Divine.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="font-mono text-lg uppercase tracking-wider px-12 py-6 border-4 border-border bg-accent text-accent-foreground hover:bg-accent/90 shadow-md hover:shadow-lg transition-all">
-                Begin Cultivation
-              </Button>
-              <Button variant="outline" className="font-mono text-lg uppercase tracking-wider px-12 py-6 border-4 hover:bg-secondary transition-all">
-                View The Path
-              </Button>
+              <Link to={isAuthenticated ? "/problems" : "/auth"}>
+                <Button className="font-mono text-lg uppercase tracking-wider px-12 py-6 border-4 border-border bg-accent text-accent-foreground hover:bg-accent/90 shadow-md hover:shadow-lg transition-all">
+                  Begin Cultivation
+                </Button>
+              </Link>
+              <Link to="/leaderboard">
+                <Button variant="outline" className="font-mono text-lg uppercase tracking-wider px-12 py-6 border-4 hover:bg-secondary transition-all">
+                  View Rankings
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
