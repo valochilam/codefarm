@@ -17,6 +17,9 @@ const Index = () => {
             </h1>
             <div className="flex gap-4 items-center font-mono text-sm uppercase tracking-wider">
               <Link to="/problems" className="hover:text-accent transition-colors">Challenges</Link>
+              {isAuthenticated && (
+                <Link to="/playground" className="hover:text-accent transition-colors">Playground</Link>
+              )}
               <Link to="/leaderboard" className="hover:text-accent transition-colors">Leaderboard</Link>
               {isAuthenticated ? (
                 <>

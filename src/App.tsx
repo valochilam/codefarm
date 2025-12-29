@@ -9,6 +9,7 @@ import Auth from "./pages/Auth";
 import Problems from "./pages/Problems";
 import Problem from "./pages/Problem";
 import Leaderboard from "./pages/Leaderboard";
+import Playground from "./pages/Playground";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/problems" element={<Problems />} />
             <Route path="/problems/:slug" element={<Problem />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/playground" element={<Playground />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
