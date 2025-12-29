@@ -67,7 +67,33 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_profiles: {
+        Row: {
+          aura: number | null
+          created_at: string | null
+          id: string | null
+          problems_solved: number | null
+          total_submissions: number | null
+          username: string | null
+        }
+        Insert: {
+          aura?: number | null
+          created_at?: string | null
+          id?: string | null
+          problems_solved?: number | null
+          total_submissions?: number | null
+          username?: string | null
+        }
+        Update: {
+          aura?: number | null
+          created_at?: string | null
+          id?: string | null
+          problems_solved?: number | null
+          total_submissions?: number | null
+          username?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
