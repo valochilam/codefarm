@@ -56,7 +56,7 @@ const languageLabels: Record<string, string> = {
 };
 
 export default function Playground() {
-  const { user, isAuthenticated, isLoading } = useAuth();
+  const { profile, isAuthenticated, isLoading } = useAuth();
   const { toast } = useToast();
   
   const [language, setLanguage] = useState('cpp');
@@ -147,7 +147,7 @@ export default function Playground() {
               <Link to="/problems" className="hover:text-accent transition-colors">Challenges</Link>
               <Link to="/playground" className="text-accent">Playground</Link>
               <Link to="/leaderboard" className="hover:text-accent transition-colors">Leaderboard</Link>
-              <span className="text-primary">{user?.aura || 0} AURA</span>
+              <span className="text-primary">{profile?.aura || 0} AURA</span>
             </div>
           </div>
         </nav>

@@ -4,7 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
-  const { user, isAuthenticated, logout } = useAuth();
+  const { profile, isAuthenticated, logout } = useAuth();
 
   return (
     <div className="min-h-screen bg-background text-foreground dark">
@@ -23,9 +23,9 @@ const Index = () => {
               <Link to="/leaderboard" className="hover:text-accent transition-colors">Leaderboard</Link>
               {isAuthenticated ? (
                 <>
-                  <span className="text-accent">{user?.username}</span>
+                  <span className="text-accent">{profile?.username}</span>
                   <span className="text-muted-foreground">|</span>
-                  <span className="text-primary">{user?.aura} AURA</span>
+                  <span className="text-primary">{profile?.aura || 0} AURA</span>
                   <button onClick={logout} className="hover:text-destructive transition-colors">
                     Logout
                   </button>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -14,9 +14,16 @@ export default function Auth() {
   const [username, setUsername] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const { login, register } = useAuth();
+  const { login, register, isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, isLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +36,7 @@ export default function Auth() {
           title: 'Welcome back, Cultivator!',
           description: 'You have successfully logged in.',
         });
+        navigate('/');
       } else {
         if (username.length < 3) {
           throw new Error('Username must be at least 3 characters');
@@ -41,8 +49,8 @@ export default function Auth() {
           title: 'Welcome to CODE_FARM!',
           description: 'Your cultivation journey begins now.',
         });
+        navigate('/');
       }
-      navigate('/');
     } catch (error) {
       toast({
         title: 'Error',

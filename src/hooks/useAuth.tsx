@@ -1,66 +1,123 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { api, User } from '@/lib/api';
+import { supabase } from '@/integrations/supabase/client';
+import { User, Session } from '@supabase/supabase-js';
+
+interface Profile {
+  id: string;
+  username: string;
+  email: string;
+  aura: number;
+  problems_solved: number;
+  total_submissions: number;
+}
 
 interface AuthContextType {
   user: User | null;
+  profile: Profile | null;
+  session: Session | null;
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (username: string, email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in on mount
-    const token = api.getToken();
-    if (token) {
-      api.getMe()
-        .then((userData) => {
-          setUser({
-            id: userData.id,
-            username: userData.username,
-            email: userData.email,
-            aura: userData.aura,
-            problemsSolved: userData.problemsSolved,
-          });
-        })
-        .catch(() => {
-          // Token is invalid, clear it
-          api.logout();
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        // Defer profile fetch with setTimeout to avoid deadlock
+        if (session?.user) {
+          setTimeout(() => {
+            fetchProfile(session.user.id);
+          }, 0);
+        } else {
+          setProfile(null);
+        }
+      }
+    );
+
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        fetchProfile(session.user.id);
+      }
       setIsLoading(false);
-    }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
+  const fetchProfile = async (userId: string) => {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
+    
+    if (data && !error) {
+      setProfile(data);
+    }
+  };
+
   const login = async (email: string, password: string) => {
-    const { user: userData } = await api.login(email, password);
-    setUser(userData);
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    
+    if (error) {
+      throw new Error(error.message);
+    }
   };
 
   const register = async (username: string, email: string, password: string) => {
-    const { user: userData } = await api.register(username, email, password);
-    setUser(userData);
+    const redirectUrl = `${window.location.origin}/`;
+    
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: redirectUrl,
+        data: {
+          username,
+        },
+      },
+    });
+    
+    if (error) {
+      throw new Error(error.message);
+    }
   };
 
-  const logout = () => {
-    api.logout();
-    setUser(null);
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      throw new Error(error.message);
+    }
+    setProfile(null);
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        profile,
+        session,
         isLoading,
         isAuthenticated: !!user,
         login,
