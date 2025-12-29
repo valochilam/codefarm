@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { api, ProblemDetail } from '@/lib/api';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
+import { CodeEditor } from '@/components/CodeEditor';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 
@@ -245,11 +245,11 @@ export default function Problem() {
                 </Select>
               </div>
 
-              <Textarea
+              <CodeEditor
                 value={code}
-                onChange={(e) => setCode(e.target.value)}
-                className="min-h-[500px] font-mono text-sm border-4 border-border bg-background resize-none"
-                placeholder="Write your solution here..."
+                onChange={setCode}
+                language={language}
+                height="500px"
               />
 
               <div className="flex gap-4">
