@@ -281,8 +281,8 @@ const Index = () => {
             </h2>
             
             <div className="grid md:grid-cols-4 gap-4">
-              <div className="border-4 border-accent bg-accent/10 p-6 text-center">
-                <div className="font-mono text-2xl font-bold text-accent mb-2">AC</div>
+              <div className="border-4 border-jade bg-jade/10 p-6 text-center">
+                <div className="font-mono text-2xl font-bold text-jade mb-2">AC</div>
                 <div className="font-mono text-sm tracking-wider">ACCEPTED</div>
               </div>
               <div className="border-4 border-destructive bg-destructive/10 p-6 text-center">
@@ -293,8 +293,8 @@ const Index = () => {
                 <div className="font-mono text-2xl font-bold mb-2">TLE</div>
                 <div className="font-mono text-sm tracking-wider">TIME LIMIT</div>
               </div>
-              <div className="border-4 border-border bg-muted p-6 text-center">
-                <div className="font-mono text-2xl font-bold mb-2">RTE</div>
+              <div className="border-4 border-accent bg-accent/10 p-6 text-center">
+                <div className="font-mono text-2xl font-bold text-accent mb-2">RTE</div>
                 <div className="font-mono text-sm tracking-wider">RUNTIME ERROR</div>
               </div>
             </div>
