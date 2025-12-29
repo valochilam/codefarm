@@ -67,35 +67,31 @@ export type Database = {
       }
     }
     Views: {
-      public_profiles: {
-        Row: {
-          aura: number | null
-          created_at: string | null
-          id: string | null
-          problems_solved: number | null
-          total_submissions: number | null
-          username: string | null
-        }
-        Insert: {
-          aura?: number | null
-          created_at?: string | null
-          id?: string | null
-          problems_solved?: number | null
-          total_submissions?: number | null
-          username?: string | null
-        }
-        Update: {
-          aura?: number | null
-          created_at?: string | null
-          id?: string | null
-          problems_solved?: number | null
-          total_submissions?: number | null
-          username?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
+      get_leaderboard: {
+        Args: { limit_count?: number; offset_count?: number }
+        Returns: {
+          aura: number
+          id: string
+          problems_solved: number
+          rank: number
+          total_submissions: number
+          username: string
+        }[]
+      }
+      get_public_profile: {
+        Args: { profile_username: string }
+        Returns: {
+          aura: number
+          created_at: string
+          id: string
+          problems_solved: number
+          total_submissions: number
+          username: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
