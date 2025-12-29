@@ -150,3 +150,12 @@ INSERT INTO problems (title, slug, description, difficulty, aura_reward, input_f
     ('Two Sum', 'two-sum', 'Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.', 'easy', 10, 'First line: n (array size)\nSecond line: n space-separated integers\nThird line: target sum', 'Two space-separated indices', '4\n2 7 11 15\n9', '0 1', true),
     ('Reverse String', 'reverse-string', 'Write a function that reverses a string. The input string is given as an array of characters.', 'easy', 5, 'A single line containing the string', 'The reversed string', 'hello', 'olleh', true),
     ('Binary Search', 'binary-search', 'Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return -1.', 'easy', 15, 'First line: n (array size)\nSecond line: n sorted integers\nThird line: target', 'Index of target or -1', '6\n-1 0 3 5 9 12\n9', '4', true);
+
+-- Insert test cultivator account (password: cultivator123)
+-- Password hash is bcrypt of "cultivator123" with 12 rounds
+INSERT INTO users (username, email, password_hash, aura, problems_solved) VALUES
+    ('TestCultivator', 'test@codefarm.dev', '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/X4.OEJlw/BWd4kbgq', 150, 5);
+
+-- Assign role to test user
+INSERT INTO user_roles (user_id, role) 
+SELECT id, 'user' FROM users WHERE username = 'TestCultivator';

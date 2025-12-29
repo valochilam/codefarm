@@ -1,0 +1,270 @@
+{
+  "Console Log": {
+    "prefix": "log",
+    "body": [
+      "console.log(${1:message});"
+    ],
+    "description": "Console log"
+  },
+  "Console Log Variable": {
+    "prefix": "logv",
+    "body": [
+      "console.log('${1:var}:', ${1:var});"
+    ],
+    "description": "Console log with variable name"
+  },
+  "Function": {
+    "prefix": "func",
+    "body": [
+      "function ${1:name}(${2:params}) {",
+      "    $0",
+      "}"
+    ],
+    "description": "Function declaration"
+  },
+  "Arrow Function": {
+    "prefix": "arrow",
+    "body": [
+      "const ${1:name} = (${2:params}) => {",
+      "    $0",
+      "};"
+    ],
+    "description": "Arrow function"
+  },
+  "Arrow Function Inline": {
+    "prefix": "arrowl",
+    "body": [
+      "const ${1:name} = (${2:params}) => ${0:expression};"
+    ],
+    "description": "Inline arrow function"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": [
+      "for (let ${1:i} = ${2:0}; ${1:i} < ${3:n}; ${1:i}++) {",
+      "    $0",
+      "}"
+    ],
+    "description": "For loop"
+  },
+  "For Of": {
+    "prefix": "forof",
+    "body": [
+      "for (const ${1:item} of ${2:array}) {",
+      "    $0",
+      "}"
+    ],
+    "description": "For...of loop"
+  },
+  "For In": {
+    "prefix": "forin",
+    "body": [
+      "for (const ${1:key} in ${2:object}) {",
+      "    $0",
+      "}"
+    ],
+    "description": "For...in loop"
+  },
+  "ForEach": {
+    "prefix": "foreach",
+    "body": [
+      "${1:array}.forEach((${2:item}) => {",
+      "    $0",
+      "});"
+    ],
+    "description": "Array forEach"
+  },
+  "Map": {
+    "prefix": "map",
+    "body": [
+      "${1:array}.map((${2:item}) => ${0:expression})"
+    ],
+    "description": "Array map"
+  },
+  "Filter": {
+    "prefix": "filter",
+    "body": [
+      "${1:array}.filter((${2:item}) => ${0:condition})"
+    ],
+    "description": "Array filter"
+  },
+  "Reduce": {
+    "prefix": "reduce",
+    "body": [
+      "${1:array}.reduce((${2:acc}, ${3:curr}) => {",
+      "    $0",
+      "    return ${2:acc};",
+      "}, ${4:initialValue})"
+    ],
+    "description": "Array reduce"
+  },
+  "Find": {
+    "prefix": "find",
+    "body": [
+      "${1:array}.find((${2:item}) => ${0:condition})"
+    ],
+    "description": "Array find"
+  },
+  "While Loop": {
+    "prefix": "while",
+    "body": [
+      "while (${1:condition}) {",
+      "    $0",
+      "}"
+    ],
+    "description": "While loop"
+  },
+  "If Statement": {
+    "prefix": "if",
+    "body": [
+      "if (${1:condition}) {",
+      "    $0",
+      "}"
+    ],
+    "description": "If statement"
+  },
+  "If Else": {
+    "prefix": "ifelse",
+    "body": [
+      "if (${1:condition}) {",
+      "    $2",
+      "} else {",
+      "    $0",
+      "}"
+    ],
+    "description": "If-else statement"
+  },
+  "Ternary": {
+    "prefix": "ternary",
+    "body": [
+      "${1:condition} ? ${2:true} : ${0:false}"
+    ],
+    "description": "Ternary operator"
+  },
+  "Switch": {
+    "prefix": "switch",
+    "body": [
+      "switch (${1:expression}) {",
+      "    case ${2:value}:",
+      "        $0",
+      "        break;",
+      "    default:",
+      "        break;",
+      "}"
+    ],
+    "description": "Switch statement"
+  },
+  "Try Catch": {
+    "prefix": "try",
+    "body": [
+      "try {",
+      "    $1",
+      "} catch (${2:error}) {",
+      "    $0",
+      "}"
+    ],
+    "description": "Try-catch block"
+  },
+  "Async Function": {
+    "prefix": "async",
+    "body": [
+      "async function ${1:name}(${2:params}) {",
+      "    $0",
+      "}"
+    ],
+    "description": "Async function"
+  },
+  "Async Arrow": {
+    "prefix": "asyncarrow",
+    "body": [
+      "const ${1:name} = async (${2:params}) => {",
+      "    $0",
+      "};"
+    ],
+    "description": "Async arrow function"
+  },
+  "Await": {
+    "prefix": "await",
+    "body": [
+      "await ${0:promise}"
+    ],
+    "description": "Await expression"
+  },
+  "Promise": {
+    "prefix": "promise",
+    "body": [
+      "new Promise((resolve, reject) => {",
+      "    $0",
+      "})"
+    ],
+    "description": "Promise"
+  },
+  "Class": {
+    "prefix": "class",
+    "body": [
+      "class ${1:ClassName} {",
+      "    constructor(${2:params}) {",
+      "        $0",
+      "    }",
+      "}"
+    ],
+    "description": "Class definition"
+  },
+  "Sort": {
+    "prefix": "sort",
+    "body": [
+      "${1:array}.sort((a, b) => a - b)"
+    ],
+    "description": "Sort array ascending"
+  },
+  "Sort Descending": {
+    "prefix": "sortdesc",
+    "body": [
+      "${1:array}.sort((a, b) => b - a)"
+    ],
+    "description": "Sort array descending"
+  },
+  "Destructure Object": {
+    "prefix": "deso",
+    "body": [
+      "const { ${1:prop} } = ${2:object};"
+    ],
+    "description": "Object destructuring"
+  },
+  "Destructure Array": {
+    "prefix": "desa",
+    "body": [
+      "const [${1:first}, ${2:second}] = ${3:array};"
+    ],
+    "description": "Array destructuring"
+  },
+  "Set": {
+    "prefix": "set",
+    "body": [
+      "const ${1:set} = new Set(${2:array});"
+    ],
+    "description": "Create Set"
+  },
+  "Map Object": {
+    "prefix": "mapobj",
+    "body": [
+      "const ${1:map} = new Map();"
+    ],
+    "description": "Create Map"
+  },
+  "Read Line": {
+    "prefix": "readline",
+    "body": [
+      "const readline = require('readline');",
+      "const rl = readline.createInterface({",
+      "    input: process.stdin,",
+      "    output: process.stdout",
+      "});",
+      "",
+      "rl.on('line', (line) => {",
+      "    $0",
+      "});"
+    ],
+    "description": "Node.js readline"
+  }
+}
